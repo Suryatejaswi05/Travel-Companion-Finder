@@ -1,0 +1,28 @@
+nav {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  justify-items: stretch;
+  align-items: center;
+  background-color: var(--nav-bg-color);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  padding: 10px 20px;
+  color: var(--white);
+  z-index: 200;
+  font-family: var(--google-ff);
+}
+
+nav > div > h1 {
+  font-size: var(--fs-h1);
+  margin: 0;
+  text-align: left;
+  font-weight: 700;
+}
+
+nav > div:last-child {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}

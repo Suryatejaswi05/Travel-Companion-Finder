@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <style>
+        body {
+            background-color: #f5ecec;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .profile-container {
+            width: 90%;
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #121212;
+            border-radius: 10px;
+        }
+        .profile-pic {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: gray;
+            display: block;
+            margin: 0 auto;
+        }
+        .user-info {
+            font-size: 18px;
+            margin-top: 10px;
+            color: white;
+        }
+        .friend-list {
+            margin-top: 10px;
+            font-size: 16px;
+            color: #bbb;
+        }
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .btn {
+            padding: 10px 15px;
+            background: #007bff;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .btn:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="profile-container">
+    <img class="profile-pic" id="profileImage" src="images/profile.png" alt="Profile Picture">
+    <div class="user-info" id="userInfo">Loading...</div>
+    <div class="friend-list"><strong>Friend List</strong></div>
+    
+    <div class="btn-container">
+        <button class="btn" onclick="window.location.href='edit-profile.html'">Edit Profile</button>
+        <button class="btn" onclick="logout()">Logout</button>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const loggedInUser = localStorage.getItem("loggedInUser");
+        const defaultProfilePic = "images/profile.png"; 
+
+        if (loggedInUser) {
+            fetch(`http://192.168.0.106:5000/api/users/getProfile/${loggedInUser}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    console.error("Error fetching user data:", data.error);
+                    return;
+                }
+
+                // Use profile picture from the database or fallback to localStorage
+                let profilePic = data.profilePic && data.profilePic !== "null" ? data.profilePic : localStorage.getItem(`profilePic_${loggedInUser}`) || defaultProfilePic;
+
+                // Update UI with fetched values
+                document.getElementById("profileImage").src = profilePic;
+                document.getElementById("userInfo").textContent = `${data.username} | Date: ${data.date || "Not Set"}`;
+
+                // Store the profile picture in localStorage for persistence
+                localStorage.setItem(`profilePic_${loggedInUser}`, profilePic);
+            })
+            .catch(error => console.error("Error fetching profile:", error));
+        } else {
+            window.location.href = "index.html";
+        }
+    });
+
+    function logout() {
+        // Keep the profile picture in localStorage even after logout
+        localStorage.removeItem("loggedInUser");
+        window.location.href = "index.html";
+    }
+</script>
+
+</body>
+</html>

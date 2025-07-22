@@ -1,0 +1,7 @@
+.award {
+  color: red;
+}
+
+.place-card {
+  background-color: var(--card-bg-color);
+}

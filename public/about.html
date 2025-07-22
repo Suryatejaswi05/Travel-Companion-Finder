@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Website</title>
+    <!-- FontAwesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f4f4;
+        }
+
+        /* Header Section */
+        header {
+            position: relative;
+            height: 100vh;
+            color: white;
+            text-align: center;
+        }
+
+        header video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav ul li {
+            display: inline;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+        }
+
+        /* Dropdown Styling */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Hide dropdown content initially */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: rgb(10, 10, 10);
+    min-width: 300px;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+    z-index: 10;
+    list-style: none;
+    padding: 10px;
+    border-radius: 5px;
+    max-height: 300px;
+    overflow-y: auto; /* Scroll if too many friends */
+}
+
+/* Show dropdown on click */
+.dropdown.show .dropdown-content {
+    display: block;
+}
+
+/* Style list items inside dropdown */
+.dropdown-content li {
+    padding: 8px;
+    cursor: pointer;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dropdown-content li:last-child {
+    border-bottom: none;
+}
+
+/* Hover effect */
+.dropdown-content li:hover {
+    background-color: #0e0d0d;
+}
+
+/* Message button */
+.message-btn {
+    background-color: #ff5733;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.message-btn:hover {
+    background-color: #ff5733;
+}
+
+
+        .notifications-icon {
+            font-size: 18px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .profile-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .profile-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .username-display {
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .hero {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 70px;
+            font-weight: bold;
+            color: whitesmoke;
+        }
+
+        .hero p {
+            font-size: 30px;
+            margin-top: 20px;
+            color: #ffcc00;
+        }
+
+        .search-bar {
+            margin-top: 20px;
+        }
+
+        .search-bar input {
+            padding: 10px;
+            margin: 5px;
+            width: 200px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .search-bar button {
+            padding: 10px 20px;
+            background: #ff5733;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        /* Features Section */
+        .features {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 50px;
+            background: white;
+        }
+
+        .feature-box {
+            text-align: center;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 20%;
+            border-radius: 5px;
+        }
+
+        .feature-box i {
+            font-size: 50px;
+            margin-bottom: 10px;
+            color: #ff5733;
+        }
+
+        .feature-box h3 {
+            font-size: 20px;
+            margin-top: 10px;
+        }
+
+        .feature-box p {
+            font-size: 14px;
+            color: #666;
+        }
+        
+
+        /* Translation Button */
+        .translation-btn {
+            background: #ff5733;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .translation-btn:hover {
+            background: #ff4500;
+        }
+        .search-results {
+            margin: 20px auto;
+            max-width: 800px;
+            text-align: center;
+        }
+
+        .search-results .user-card {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .user-card img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+        .add-btn {
+            background-color: #ff4500;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: auto;
+        }
+        
+        .add-btn:hover {
+            background-color: #ff4500;
+        }
+        .notifications-dropdown {
+            position: absolute;
+            top: 50px;
+            right: 10px;
+            background: rgb(8, 8, 8);
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            padding: 10px;
+            border-radius: 5px;
+            width: 250px;
+            display: none;
+        }
+        
+        .notification-container {
+            position: relative;
+        }
+        
+        .notification-item {
+            padding: 5px;
+            border-bottom: 1px solid #0f0f0f;
+        }
+        .notification-item button {
+            margin-left: 10px;
+        } 
+        .notifications-icon::after {
+            content: attr(data-count);
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: red;
+            color: rgb(17, 17, 17);
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        #chatBox button {
+            background-color: #ff5733;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        
+        #chatBox button:hover {
+            background-color: #d64224;
+        }
+        
+        .message-count {
+            background: red;
+            color: white;
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 50%;
+            margin-left: 5px;
+        }
+        /* Chatbox Container */
+        #chatBox {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 450px;
+            height: 450px;
+            background: rgb(8, 8, 8);
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            z-index: 1000;
+            display: none;  /* ✅ Initially hidden */
+            flex-direction: column;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        
+        /* ✅ When chat box should appear */
+        #chatBox.show {
+            display: flex !important;
+            opacity: 1;
+            visibility: visible;
+        }  
+
+/* Chat Messages - More Space */
+#chatMessages {
+    flex: 1; /* Takes up available space */
+    height: 350px; /* More height for messages */
+    overflow-y: auto;
+    padding: 10px;
+    background: #0a0a0a;
+    border: 1px solid #0e0d0d;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+/* Message Alignment */
+.chat-message {
+    padding: 10px 14px;
+    border-radius: 10px;
+    max-width: 75%;
+    word-wrap: break-word;
+}
+
+/* Sent Messages → Right */
+.my-message {
+    background-color: #e9ecef;
+    color: black;
+    align-self: flex-end;
+}
+
+/* Received Messages → Left */
+.other-message {
+    background-color: #e9ecef;
+    color: black;
+    align-self: flex-start;
+}
+
+/* Input Box & Buttons - Proper Spacing */
+.chat-input-container {
+    display: flex;
+    flex-direction: row;  /* Align elements in a row */
+    align-items: center;  /* Center align vertically */
+    justify-content: space-between; /* Distribute space */
+    gap: 8px;
+    padding-top: 10px;
+}
+
+/* Input Field */
+#chatInput {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #080808;
+    border-radius: 5px;
+    font-size: 14px;
+    background: white;
+    color: black;
+}
+
+/* Button Container */
+.button-container {
+    display: flex;
+    gap: 5px; /* Small gap between buttons */
+}
+
+/* Buttons - Equal Size */
+.send-btn, .close-btn {
+    background-color: #ff5733;
+    color: white;
+    padding: 8px 0;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 75px;  /* Adjusted for proper alignment */
+    text-align: center;
+}
+
+/* Button Hover Effects */
+.send-btn:hover {
+    background-color: #ff3d1f;
+}
+.close-btn {
+    background-color: #ff5733;
+}
+.close-btn:hover {
+    background-color: #ff3d1f;
+}
+
+        
+        
+                   
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header>
+        <!-- Video Background -->
+        
+
+        <nav>
+            <div class="logo" sty>Travel Companion Finder</div>
+
+            <!-- Right Side Navigation (Home, About, Notifications, Profile) -->
+            <div class="nav-right">
+                <ul>
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li class="dropdown">
+                        <a href="#" onclick="toggleBuddyList()">Buddy List ⏷</a>
+                        <ul class="dropdown-content" id="buddyListContainer">
+                            <li>Loading...</li> <!-- Placeholder until data loads -->
+                        </ul>
+                    </li>
+                    <li class="notification-container">
+                        <i class="fas fa-bell notifications-icon" onclick="toggleNotifications()"></i>
+                        <div id="notificationsDropdown" class="notifications-dropdown" style="display: none;"></div>
+                    </li>                    
+                </ul>                
+                <div id="chatBox">
+                    <h3 id="chatWith"></h3>
+                    <div id="chatMessages"></div>
+                    <div class="chat-input-container">
+                        <input type="text" id="chatInput" placeholder="Type a message..." />
+                        <button class="send-btn" onclick="sendMessage()">Send</button>
+                        <button class="close-btn" onclick="closeChat()">Close</button>
+                    </div>
+                </div>                                                               
+                <!-- User Profile Section -->
+                <div class="profile-container">
+                    <span id="usernameDisplay" class="username-display">User</span>
+                    <a href="profile.html">
+                        <img id="userIcon" src="images/profile.png" alt="User" class="profile-icon">
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <div class="hero">
+            <h1 style="color: black;">About</h1>
+        </div>
+    </header>
+    <section class="search-results" id="searchResults"></section>
+    <!-- Features Section -->
+    <section class="features">
+        <div class="feature-box">
+            <i class="fas fa-utensils"></i>
+            <h3>Hotels & Restaurants</h3>
+            <p>"Find the best places to eat and stay around your destination."</p>
+            <button class="translation-btn" onclick="location.href=`http://192.168.0.106:3000/`">Search</button>
+        </div>
+        
+        <div class="feature-box">
+            <i class="fas fa-map-marker-alt"></i>
+            <h3>Guide</h3>
+            <p>"Let us show you the best spots and experiences to explore."</p>
+            <button class="translation-btn" target="_blanck" onclick="location.href='guide.html'">Guide</button>
+        </div>
+        
+        <div class="feature-box">
+            <i class="fas fa-language"></i>
+            <h3>Language Translation</h3>
+            <p>"Breaking language barriers for smoother travel experiences."</p>
+            <button class="translation-btn" onclick="location.href='translator.html'">Start Translation</button>
+        </div>
+        <!-- Vehicle Rentals -->
+        <div class="feature-box">
+            <i class="fas fa-car"></i> <!-- Vehicle Rental Icon -->
+            <h3>Vehicle Rentals</h3>
+           <p>"Find the best rental services for bikes, cars, and cycles at your location."</p>
+           <button class="translation-btn" onclick="window.open(`http://192.168.0.106:3006/`, '_blank')">Find Rentals</button>
+        </div>
+    </section>
+    <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const loggedInUser = localStorage.getItem("loggedInUser");
+        
+            if (loggedInUser) {
+                // Retrieve stored user profiles
+                let allUsers = JSON.parse(localStorage.getItem("users")) || {};
+                let userProfile = allUsers[loggedInUser] || {}; // Load only the logged-in user's data
+        
+                if (userProfile.username) {
+                    document.getElementById("usernameDisplay").textContent = userProfile.username;
+                }
+                if (userProfile.profilePic) {
+                    document.getElementById("userIcon").src = userProfile.profilePic;
+                }
+        
+                // Fetch latest profile data from backend for accuracy
+                fetch(`http://192.168.0.106:5000/api/users/getProfile/${loggedInUser}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.username) {
+                            document.getElementById("usernameDisplay").textContent = data.username;
+                        }
+                        if (data.profilePic) {
+                            document.getElementById("userIcon").src = data.profilePic;
+                        }
+        
+                        // Store updated profile data only for the logged-in user
+                        let allUsers = JSON.parse(localStorage.getItem("users")) || {};
+                        allUsers[loggedInUser] = {
+                            ...allUsers[loggedInUser], // Keep existing user data
+                            profilePic: data.profilePic || allUsers[loggedInUser]?.profilePic // Preserve previous pic if not updated
+                        };
+                        localStorage.setItem("users", JSON.stringify(allUsers));
+                        localStorage.setItem("gender", data.gender);
+                    })
+                    .catch(error => console.error("Error fetching user:", error));
+            } else {
+                console.log("[USER NOT LOGGED IN] Redirecting to signup...");
+                window.location.href = "index.html"; // Redirect if not logged in
+            }
+        });     
+        function searchBuddies() {
+            const place = document.getElementById("searchPlace").value;
+            const date = document.getElementById("searchDate").value;
+            const loggedInUser = localStorage.getItem("loggedInUser");
+            const gender = localStorage.getItem("gender");
+        
+            //if (!place || !date) {
+                if (!place) {
+                alert("Please enter both place and date.");
+                return;
+            }
+        
+            fetch(`http://192.168.0.106:5000/api/users/search?place=${encodeURIComponent(place)}&date=${encodeURIComponent(date)}&loggedInUser=${loggedInUser}&gender=${gender}`)
+                .then(response => response.json())
+                .then(data => {
+                    const resultsContainer = document.getElementById("searchResults");
+                    resultsContainer.innerHTML = "";
+        
+                    if (data.length === 0) {
+                        resultsContainer.innerHTML = "<p>No matching users found.</p>";
+                        return;
+                    }
+        
+                    data.forEach(user => {
+                        if (user.username !== loggedInUser) { // Exclude logged-in user
+                            const userCard = document.createElement("div");
+                            userCard.classList.add("user-card");
+        
+                            userCard.innerHTML = `
+                                <img src="${user.profilePic || 'images/profile.png'}" alt="User">
+                                <div>
+                                    <strong>${user.fullName}</strong>
+                                    <p>${user.email}</p>
+                                </div>
+                                <button class="add-btn" 
+                                onclick="${!user.isFriend ? `sendRequest('${user.username}')` : ''}">
+                                ${user.isFriend ? "Connected" : "Add +"}
+                                </button>  
+                            `;
+        
+                            resultsContainer.appendChild(userCard);
+                        }
+                    });
+                })
+                .catch(error => console.error("Error fetching users:", error));
+        }        
+        function sendRequest(username) {
+            const sender = localStorage.getItem("loggedInUser");
+        
+            fetch("http://192.168.0.106:5000/api/users/sendRequest", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ sender, receiver: username })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                updateNotificationCount();
+                searchBuddies();  // Update bell icon
+            })
+            .catch(error => console.error("Error sending request:", error));
+        }
+        function updateNotificationCount() {
+            const loggedInUser = localStorage.getItem("loggedInUser");
+            if (!loggedInUser) return;
+        
+            fetch(`http://192.168.0.106:5000/api/users/notifications/all/${loggedInUser}`)
+                .then(response => response.json())
+                .then(data => {
+                    const notificationIcon = document.querySelector(".notifications-icon");
+                    const notificationsDropdown = document.getElementById("notificationsDropdown");
+        
+                    // Clear existing notifications
+                    notificationsDropdown.innerHTML = "<h3>Notifications</h3>";
+        
+                    if (data.length > 0) {
+                        notificationIcon.setAttribute("data-count", data.length);
+        
+                        data.forEach(notification => {
+                            const notificationItem = document.createElement("div");
+                            notificationItem.classList.add("notification-item");
+        
+                            // ✅ Fetch profile picture correctly
+                            let profilePic = "images/profile.png"; // Default image
+                            
+                            if (notification.profilePic && notification.profilePic.trim() !== "" && notification.profilePic !== "null") {
+                                if (notification.profilePic.startsWith("data:image")) {
+                                    profilePic = notification.profilePic; // Base64 image
+                                } else {
+                                    profilePic = `http://192.168.0.106:5000/uploads/${notification.profilePic}`; // Uploaded image
+                                }
+                            }
+        
+                            if (notification.type === "friend_request") {
+                                notificationItem.innerHTML = `
+                                    <img src="${profilePic}" alt="User" class="profile-icon"
+                                        width="40" height="40" style="border-radius: 50%;"
+                                        onerror="this.onerror=null; this.src='images/profile.png';">
+                                    <p><strong>${notification.sender}</strong> sent a friend request</p>
+                                    <button onclick="respondRequest(${notification.id}, 'accepted')">Accept</button>
+                                    <button onclick="respondRequest(${notification.id}, 'declined')">Decline</button>
+                                `;
+                            } else {
+                                notificationItem.innerHTML = `
+                                    <p>${notification.message}</p>
+                                    <button onclick="removeNotification(${notification.id})">OK</button>
+                                `;
+                            }
+        
+                            notificationsDropdown.appendChild(notificationItem);
+                        });
+                    } else {
+                        notificationIcon.setAttribute("data-count", "0");
+                        notificationsDropdown.innerHTML += "<p>No new notifications</p>";
+                    }
+                })
+                .catch(error => console.error("❌ Error fetching notifications:", error));
+        }                                                
+        
+        // Fetch notifications on page load and every 10 seconds
+        document.addEventListener("DOMContentLoaded", () => {
+            updateNotificationCount();
+            setInterval(updateNotificationCount, 10000); // Auto-refresh every 10 seconds
+        });        
+    
+        function respondRequest(requestId, action) {
+            const loggedInUser = localStorage.getItem("loggedInUser");
+            
+            fetch("http://192.168.0.106:5000/api/users/respondRequest", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ requestId, action, loggedInUser })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+        
+                // Remove the processed request from the notifications list
+                const requestElement = document.querySelector(`button[onclick="respondRequest(${requestId}, '${action}')"]`);
+                if (requestElement) {
+                    requestElement.parentNode.remove();
+                }
+        
+                // Refresh notification count
+                updateNotificationCount();
+        
+                // Decrease notification count
+                const notificationIcon = document.querySelector(".notifications-icon");
+                let currentCount = parseInt(notificationIcon.getAttribute("data-count")) || 0;
+                let newCount = currentCount > 0 ? currentCount - 1 : 0;
+                notificationIcon.setAttribute("data-count", newCount);
+        
+                // If no notifications left, update the UI
+                const notificationsDropdown = document.getElementById("notificationsDropdown");
+                if (newCount === 0) {
+                    notificationsDropdown.innerHTML = "<h3>Friend Requests</h3><p>No new requests</p>";
+                }
+        
+                // If request is accepted, update friend count and send notification
+                if (action === "accepted") {
+                    updateFriendCount(); // ✅ Increase the friend count
+                    fetch("http://192.168.0.106:5000/api/users/sendNotification", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ receiver: data.receiver, message: `${loggedInUser} accepted your friend request!` })
+                    })
+                    .catch(error => console.error("Error sending notification:", error));
+                }
+            })
+            .catch(error => console.error("Error updating request:", error));
+        }
+        function updateFriendCount() {
+            const loggedInUser = localStorage.getItem("loggedInUser");
+        
+            fetch(`http://192.168.0.106:5000/api/users/friends/${loggedInUser}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById("friendCount").textContent = data.friends.length;
+                    }
+                })
+                .catch(error => console.error("Error updating friend count:", error));
+        }                        
+        function fetchUserNotifications() {
+            const loggedInUser = localStorage.getItem("loggedInUser");
+            if (!loggedInUser) return;
+        
+            fetch(`http://192.168.0.106:5000/api/users/notifications/${loggedInUser}`)
+                .then(response => response.json())
+                .then(data => {
+                    const notificationsDropdown = document.getElementById("notificationsDropdown");
+                    notificationsDropdown.innerHTML = "<h3>Notifications</h3>";
+        
+                    if (data.length > 0) {
+                        data.forEach(notification => {
+                            const notificationItem = document.createElement("div");
+                            notificationItem.classList.add("notification-item");
+                            notificationItem.innerHTML = `<p>${notification.message}</p>`;
+                            notificationsDropdown.appendChild(notificationItem);
+                        });
+                    } else {
+                        notificationsDropdown.innerHTML += "<p>No new notifications</p>";
+                    }
+                })
+                .catch(error => console.error("Error fetching notifications:", error));
+        }
+        
+        // Fetch notifications on page load
+        document.addEventListener("DOMContentLoaded", fetchUserNotifications);
+        function removeNotification(notificationId) {
+            fetch("http://192.168.0.106:5000/api/users/notifications/markAsRead", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ notificationId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Remove notification from the dropdown
+                    const notificationElement = document.querySelector(`button[onclick="removeNotification(${notificationId})"]`);
+                    if (notificationElement) {
+                        notificationElement.parentNode.remove();
+                    }
+        
+                    // Update notification count
+                    const notificationIcon = document.querySelector(".notifications-icon");
+                    let currentCount = parseInt(notificationIcon.getAttribute("data-count")) || 0;
+                    let newCount = Math.max(0, currentCount - 1);
+                    notificationIcon.setAttribute("data-count", newCount);
+        
+                    // If no notifications left, update the UI
+                    const notificationsDropdown = document.getElementById("notificationsDropdown");
+                    if (newCount === 0) {
+                        notificationsDropdown.innerHTML = "<h3>Notifications</h3><p>No new notifications</p>";
+                    }
+                }
+            })
+            .catch(error => console.error("Error removing notification:", error));
+        }     
+        function toggleBuddyList() {
+            const dropdown = document.querySelector(".dropdown");
+            const buddyListContainer = document.getElementById("buddyListContainer");
+        
+            dropdown.classList.toggle("show");
+        
+            const loggedInUser = localStorage.getItem("loggedInUser");
+            if (!loggedInUser) {
+                buddyListContainer.innerHTML = "<li>User not logged in</li>";
+                return;
+            }
+        
+            fetch(`http://192.168.0.106:5000/api/users/friends/${loggedInUser}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log("👥 Buddy List Data:", data);
+        
+                    buddyListContainer.innerHTML = ""; // Clear the buddy list
+        
+                    if (data.success && data.friends.length > 0) {
+                        data.friends.forEach(friend => {
+                            if (!friend.friend) return; // Ensure valid friend data
+        
+                            const username = friend.friend.trim();
+                            console.log("Friend Data:", friend); // Debugging
+        
+                            // ✅ Handle Base64 and Uploaded Images Correctly
+                            let profilePic = "images/profile.png"; // Default image
+                            if (friend.profilePic && friend.profilePic.trim() !== "" && friend.profilePic !== "null") {
+                                if (friend.profilePic.startsWith("data:image")) {
+                                    // If it's a Base64 image, use it directly
+                                    profilePic = friend.profilePic;
+                                } else {
+                                    // Otherwise, assume it's an uploaded image
+                                    profilePic = `http://192.168.0.106:5000/uploads/${friend.profilePic}`;
+                                }
+                            }
+        
+                            console.log(`Adding buddy: ${username}, Profile Pic: ${profilePic}`);
+        
+                            const listItem = document.createElement("li");
+                            listItem.innerHTML = `
+                                <img src="${profilePic}" alt="Profile" class="profile-icon" 
+                                    width="40" height="40" style="border-radius: 50%;" 
+                                    onerror="this.onerror=null; this.src='images/profile.png';">
+                                <span>${username}</span>
+                                <button class="message-btn" data-username="${username}">💬 Chat</button>
+                            `;
+        
+                            buddyListContainer.appendChild(listItem);
+                        });
+        
+                        // ✅ Attach event listeners after list items are added
+                        document.querySelectorAll(".message-btn").forEach(button => {
+                            button.addEventListener("click", function () {
+                                openChat(this.dataset.username);
+                            });
+                        });
+                    } else {
+                        buddyListContainer.innerHTML = "<li>No buddies yet</li>";
+                    }
+                })
+                .catch(error => {
+                    console.error("❌ Error fetching buddies:", error);
+                    buddyListContainer.innerHTML = "<li>Failed to load buddies</li>";
+                });
+        }                                                                      
+        
+        // ✅ Hide chatbox immediately on page load to avoid 2-sec flicker
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("chatBox").style.display = "none";
+        });
+        
+        const socket = io("http://192.168.0.106:5000");
+        socket.on("newMessage", ({ sender, message }) => {
+            const chatWithUser = localStorage.getItem("lastChatWith");
+            if (chatWithUser === sender) {
+                const chatMessages = document.getElementById("chatMessages");
+        
+                const newMessage = document.createElement("div");
+                newMessage.classList.add("chat-message", "other-message");
+                newMessage.innerHTML = `<strong>${sender}:</strong> ${message}`;
+                chatMessages.appendChild(newMessage);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+        
+                // ✅ Store received message in localStorage
+                storeMessage(sender, chatWithUser, message);
+            }
+        });
+        
+        function openChat(friendUsername) {
+            console.log(`🔵 Opening chat with: ${friendUsername}`);
+        
+            // ✅ Store chat session in localStorage
+            localStorage.setItem("lastChatWith", friendUsername);
+        
+            // ✅ Ensure chat box exists before displaying
+            const chatBox = document.getElementById("chatBox");
+            if (!chatBox) {
+                console.error("❌ Chatbox not found!");
+                return;
+            }
+        
+            // ✅ Always reset chat box visibility
+            chatBox.style.display = "flex";
+            chatBox.style.opacity = "1";      
+            chatBox.style.visibility = "visible";
+        
+            // ✅ Update the chat title
+            document.getElementById("chatWith").innerText = `Chat with ${friendUsername}`;
+        
+            // ✅ Clear previous messages to avoid duplication
+            const chatMessages = document.getElementById("chatMessages");
+            chatMessages.innerHTML = "<p>Loading messages...</p>";
+        
+            // ✅ Load messages from LocalStorage first
+            loadChatHistory(friendUsername);
+        
+            // 🔄 Fetch messages from the server
+            fetch(`http://192.168.0.106:5000/api/messages/${localStorage.getItem("loggedInUser")}/${friendUsername}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log("✅ Messages received from backend:", data);
+                    chatMessages.innerHTML = ""; // Clear loading message
+        
+                    if (data.length === 0) {
+                        chatMessages.innerHTML = "<p>No previous messages.</p>";
+                    }
+        
+                    data.forEach(msg => {
+                        const messageDiv = document.createElement("div");
+                        messageDiv.classList.add("chat-message",
+                            msg.sender === localStorage.getItem("loggedInUser") ? "my-message" : "other-message");
+                        messageDiv.innerHTML = `<strong>${msg.sender}:</strong> ${msg.message}`;
+                        chatMessages.appendChild(messageDiv);
+        
+                        // 🔥 Store chat history in `localStorage`
+                        storeMessage(msg.sender, friendUsername, msg.message);
+                    });
+        
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                })
+                .catch(error => console.error("❌ Error fetching messages:", error));
+        }                
+                                
+        
+        function sendMessage() {
+            const messageInput = document.getElementById("chatInput");
+            const message = messageInput.value.trim();
+            if (!message) return;
+        
+            const chatWithUser = localStorage.getItem("lastChatWith");
+            const loggedInUser = localStorage.getItem("loggedInUser");
+        
+            // ✅ Append Sent Message to UI
+            const chatMessages = document.getElementById("chatMessages");
+            const newMessage = document.createElement("div");
+            newMessage.classList.add("chat-message", "my-message");
+            newMessage.innerHTML = `<strong>${loggedInUser}:</strong> ${message}`;
+            chatMessages.appendChild(newMessage);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        
+            // ✅ Store Sent Message in localStorage
+            storeMessage(loggedInUser, chatWithUser, message);
+        
+            // ✅ Emit message via WebSocket
+            socket.emit("sendMessage", { sender: loggedInUser, receiver: chatWithUser, message });
+        
+            // ✅ Store Message in Server Database
+            fetch("http://192.168.0.106:5000/api/messages/send", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    sender: loggedInUser,
+                    receiver: chatWithUser,
+                    message
+                })
+            })
+            .then(response => response.json())
+            .then(data => console.log("✅ Message saved:", data))
+            .catch(error => console.error("❌ Error saving message:", error));
+        
+            messageInput.value = "";
+        }
+        
+        // ✅ Store messages in `localStorage`
+        function storeMessage(sender, receiver, message) {
+            const chatKey = `chat_${receiver}`;
+            let chatHistory = JSON.parse(localStorage.getItem(chatKey)) || [];
+            chatHistory.push({ sender, message });
+        
+            // ✅ Save updated chat history in LocalStorage
+            localStorage.setItem(chatKey, JSON.stringify(chatHistory));
+            console.log(`💾 Stored message: ${sender} -> ${receiver}: ${message}`);
+        }                
+        
+        // ✅ Load messages from `localStorage`
+        function loadChatHistory(receiver) {
+            console.log(`📂 Loading chat history with: ${receiver}`);
+            const chatMessages = document.getElementById("chatMessages");
+            chatMessages.innerHTML = "";
+        
+            const chatKey = `chat_${receiver}`;
+            let chatHistory = JSON.parse(localStorage.getItem(chatKey)) || [];
+        
+            if (chatHistory.length === 0) {
+                chatMessages.innerHTML = "<p>No previous messages.</p>";
+            }
+        
+            chatHistory.forEach(msg => {
+                const msgClass = msg.sender === localStorage.getItem("loggedInUser") ? "my-message" : "other-message";
+                const messageDiv = document.createElement("div");
+                messageDiv.classList.add("chat-message", msgClass);
+                messageDiv.innerHTML = `<strong>${msg.sender}:</strong> ${msg.message}`;
+                chatMessages.appendChild(messageDiv);
+            });
+        
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }                
+        
+        // ✅ Load Messages After Refresh (without showing chatbox)
+        window.onload = function () {
+            console.log("🔄 Page Loaded - Checking chat history...");
+        
+            // ✅ Hide chat box initially
+            const chatBox = document.getElementById("chatBox");
+            chatBox.classList.remove("show");
+        
+            // ✅ Load previous chat history but DO NOT open chat box
+            const lastChatWith = localStorage.getItem("lastChatWith");
+            if (lastChatWith) {
+                console.log(`💾 Found previous chat with: ${lastChatWith}`);
+                loadChatHistory(lastChatWith);
+            }
+        };                                                        
+        
+        function closeChat() {
+            const chatBox = document.getElementById("chatBox");
+            chatBox.style.display = "none";  // ✅ Hide the chatbox properly
+            chatBox.style.opacity = "0";  
+            chatBox.style.visibility = "hidden";
+        
+            // ✅ Reset chat title to prevent old data from being shown
+            document.getElementById("chatWith").innerText = "";
+        
+            console.log("❌ Chat closed. Ready for new session.");
+        }                                
+                   
+    
+        function toggleNotifications() {
+            const dropdown = document.getElementById("notificationsDropdown");
+            dropdown.style.display = dropdown.style.display === "none" ? "block" : "none";
+        }
+    
+        document.addEventListener("DOMContentLoaded", updateNotificationCount);   
+                                                
+    </script>
+
+</body>
+</html>

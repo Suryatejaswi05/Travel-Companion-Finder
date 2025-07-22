@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #0e0f0f;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            align-items: center;
+            width: 100vw;
+            height: 100vh;
+            background: white;
+            padding: 40px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 0;
+            gap: 50px;
+        }
+
+        .profile-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .profile-pic {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid #007bff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            margin-bottom: 15px;
+            /* Increased spacing */
+        }
+
+        .profile-pic img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .profile-buttons {
+            display: flex;
+            flex-direction: column;
+            /* Align buttons in a straight vertical line */
+            gap: 10px;
+            /* Space between buttons */
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .profile-buttons label,
+        .profile-buttons button {
+            background: #007bff;
+            /* Blue color */
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 10px 16px;
+            border-radius: 5px;
+            border: none;
+            transition: background 0.3s;
+            width: 130px;
+            height: 40px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-buttons label:hover,
+        .profile-buttons button:hover {
+            background: #0056b3;
+            /* Darker blue on hover */
+        }
+
+        .profile-buttons input {
+            display: none;
+        }
+
+        .form-section {
+            flex-grow: 1;
+            width: 100%;
+        }
+
+        h2 {
+            margin-bottom: 10px;
+            font-size: 24px;
+            color: #333;
+            text-align: center;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            text-align: left;
+            margin: 10px 0 5px;
+            color: #555;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+        }
+
+        button.save {
+            width: 100%;
+            background: #007bff;
+            color: white;
+            padding: 14px;
+            border: none;
+            margin-top: 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 18px;
+            transition: background 0.3s;
+        }
+
+        button.save:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="profile-section">
+            <h2>Edit Profile</h2>
+            <div class="profile-pic">
+                <img id="profileImage" src="images/profile.png" alt="Profile Picture">
+            </div>
+            <div class="profile-buttons">
+                <input type="file" id="profilePicInput" accept="image/*" onchange="updateProfilePic(event)">
+                <label for="profilePicInput">Choose Photo</label>
+                <button onclick="removeProfilePic()">Remove Photo</button>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <label>Username</label>
+            <input type="text" id="username" readonly>
+
+            <label>Gender</label>
+            <input type="text" id="gender" readonly>
+
+            <label>Profile visibility</label>
+            <select name="sgender" id="sgender" class="form-control">
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Female">All</option>
+            </select>
+
+            <label>Phone Number</label>
+            <input type="tel" id="phone" placeholder="Enter your phone number" maxlength="10" pattern="[0-9]{10}">
+
+            <label>Email</label>
+            <input type="email" id="email" placeholder="Enter your email" required>
+
+            <label>Place</label>
+            <input type="text" id="place" placeholder="Enter your destination">
+
+            <label style="display: none;">Date</label>
+            <input style="display: none;" type="date" id="date">
+
+            <button class="save" onclick="saveProfile()">Save</button>
+        </div>
+    </div>
+
+    <script>
+        const defaultImage = "images/profile.png"; // Set your default profile image path
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const loggedInUser = localStorage.getItem("loggedInUser");
+
+            if (loggedInUser) {
+                fetch(`http://192.168.0.106:5000/api/users/getProfile/${loggedInUser}`)
+                    .then(response => response.json())
+                    .then(userProfile => {
+                        if (userProfile.error) {
+                            console.error("User not found:", userProfile.error);
+                            return;
+                        }
+
+                        document.getElementById("username").value = userProfile.username || "";
+                        document.getElementById("gender").value = userProfile.gender || "";
+                        document.getElementById("phone").value = userProfile.phone || "";
+                        document.getElementById("email").value = userProfile.email || "";
+                        document.getElementById("place").value = userProfile.place || "";
+                        let parts = userProfile.date.split("-");
+                        document.getElementById("date").value = `${parts[2]}-${parts[1]}-${parts[0]}`;
+                        //document.getElementById("date").value = userProfile.date || "";
+                        document.getElementById("profileImage").src = userProfile.profilePic && userProfile.profilePic !== "null" ? userProfile.profilePic : "images/profile.png";
+                    })
+                    .catch(error => console.error("Error fetching profile:", error));
+            } else {
+                window.location.href = "index.html";
+            }
+        });
+
+
+        function updateProfilePic(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById("profileImage").src = e.target.result;
+
+                    let users = JSON.parse(localStorage.getItem("users")) || {};
+                    const loggedInUser = localStorage.getItem("loggedInUser");
+
+                    if (loggedInUser) {
+                        users[loggedInUser] = users[loggedInUser] || {};
+                        users[loggedInUser].profilePic = e.target.result;
+                        localStorage.setItem("users", JSON.stringify(users));
+
+                        // Store in localStorage to persist across logout
+                        localStorage.setItem(`profilePic_${loggedInUser}`, e.target.result);
+
+                        // Save to database
+                        fetch("http://192.168.0.106:5000/api/users/saveProfile", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({
+                                username: loggedInUser,
+                                profilePic: e.target.result
+                            }),
+                        })
+                            .then(response => response.json())
+                            .then(data => console.log("Profile picture updated"))
+                            .catch(error => console.error("Error saving profile pic:", error));
+                    }
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function removeProfilePic() {
+            const defaultImage = "images/profile.png";
+            document.getElementById("profileImage").src = defaultImage;
+
+            let users = JSON.parse(localStorage.getItem("users")) || {};
+            const loggedInUser = localStorage.getItem("loggedInUser");
+
+            if (loggedInUser) {
+                users[loggedInUser] = users[loggedInUser] || {};
+                users[loggedInUser].profilePic = defaultImage;
+                localStorage.setItem("users", JSON.stringify(users));
+                localStorage.setItem(`profilePic_${loggedInUser}`, defaultImage);
+
+                // Save to database
+                fetch("http://192.168.0.106:5000/api/users/saveProfile", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        username: loggedInUser,
+                        profilePic: defaultImage
+                    }),
+                })
+                    .then(response => response.json())
+                    .then(data => console.log("Profile picture reset to default"))
+                    .catch(error => console.error("Error resetting profile pic:", error));
+            }
+        }
+
+        function saveProfile() {
+            let dateInput = document.getElementById('date').value;
+            let formattedDate = dateInput ? dateInput.split("-").reverse().join("-") : "";
+
+            const userProfile = {
+                username: document.getElementById('username').value,
+                gender: document.getElementById('gender').value,
+                phone: document.getElementById('phone').value,
+                email: document.getElementById('email').value,
+                place: document.getElementById('place').value,
+                sgender: document.getElementById('sgender').value,
+                date: formattedDate,
+                profilePic: document.getElementById('profileImage').src
+            };
+
+            fetch("http://192.168.0.106:5000/api/users/saveProfile", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(userProfile),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert("Profile saved successfully!");
+                        window.location.href = "profile.html";
+                    } else {
+                        alert("Error saving profile: " + data.error);
+                    }
+                })
+                .catch(error => console.error("Error saving profile:", error));
+        }
+
+    </script>
+</body>
+
+</html>

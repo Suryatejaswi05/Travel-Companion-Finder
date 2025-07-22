@@ -1,0 +1,33 @@
+.select-bg {
+  background-color: var(--card-bg-color);
+  border-radius: 10px;
+}
+
+.css-13sljp9 {
+  width: 100%;
+}
+
+.heading {
+  font-size: var(--fs-section-heading);
+  margin-bottom: 20px;
+  text-align: left;
+  color: var(--white);
+  font-weight: bold;
+}
+
+.input-row > .css-1nrlq1o-MuiFormControl-root {
+  width: 100%;
+  max-width: 150px;
+}
+
+.input-row {
+  display: flex;
+  justify-content: flex-start;
+  gap: 20px;
+}
+
+.location-col {
+  margin-top: 20px;
+  height: 70vh;
+  overflow: auto;
+}

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Signup</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        /* Scrollbar Styling */
+        #loginForm::-webkit-scrollbar,
+        #createAccountForm::-webkit-scrollbar {
+            width: 6px;
+            /* Thinner scrollbar */
+        }
+
+        #loginForm::-webkit-scrollbar-thumb,
+        #createAccountForm::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.7);
+            /* Light scrollbar */
+            border-radius: 10px;
+        }
+
+        #loginForm::-webkit-scrollbar-track,
+        #createAccountForm::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.2);
+            /* Transparent track */
+        }
+
+        /* Increase padding to move scrollbar further right */
+        .relative.w-full.h-full {
+            padding-right: 16px;
+            /* Increased padding */
+        }
+    </style>
+</head>
+
+<body class="flex items-center justify-center h-screen w-screen bg-cover bg-center m-0 p-0"
+    style="background-image: url('images/background.png');">
+
+    <div class="flex w-3/5 h-4/5 bg-white rounded-xl shadow-lg overflow-hidden">
+        <!-- Left Side: Travel Image and Quote -->
+        <div class="w-1/2 relative">
+            <img src="images/background.png" alt="Travel Image" class="w-full h-full object-cover">
+            <div
+                class="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center p-6 text-center">
+                <h1 class="text-white text-3xl font-bold">ENJOY THE WORLD</h1>
+                <p class="text-white mt-2 text-sm font-bold tracking-wide max-w-xs">
+                    "It's not about the destination... It's about the journey."
+                </p>
+            </div>
+        </div>
+
+        <!-- Right Side: Forms with Scrollable Content -->
+        <div class="w-1/2 flex items-center justify-center relative">
+            <div class="absolute inset-0 bg-cover bg-center filter blur-xl"
+                style="background-image: url('background.png');"></div>
+
+            <!-- Scrollable Form Container -->
+            <div
+                class="relative w-full h-full bg-blue-900 bg-opacity-80 p-6 text-white flex flex-col justify-center overflow-y-auto max-h-full">
+
+                <!-- Login Form -->
+                <div id="loginForm">
+                    <h2 class="text-2xl font-bold mb-4 text-center">Login!!</h2>
+                    <form onsubmit="return loginUser()">
+                        <label class="block mb-1 text-sm">Username*</label>
+                        <input type="text" id="loginUsername" class="w-full p-2 mb-2 text-black rounded-md text-sm"
+                            placeholder="Your Username">
+
+                        <label class="block mb-1 text-sm">Password*</label>
+                        <input type="password" id="loginPassword" class="w-full p-2 mb-4 text-black rounded-md text-sm"
+                            placeholder="">
+
+                        <button type="submit"
+                            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-md transition duration-300">Continue</button>
+                    </form>
+
+                    <p class="mt-4 text-center text-white text-sm">
+                        Don't have an account?
+                        <a href="#" id="createAccountLink" class="text-white hover:underline">Create</a>
+                    </p>
+                </div>
+
+                <!-- Create Account Form -->
+                <div id="createAccountForm" class="hidden overflow-y-auto max-h-[400px]">
+                    <h2 class="text-xl font-bold mb-4 text-center">Create an Account</h2>
+                    <form onsubmit="return registerUser()" class="flex flex-col gap-2">
+                        <label class="text-sm">Full Name*</label>
+                        <input type="text" id="fullName" class="p-2 text-black rounded-md text-sm"
+                            placeholder="Your Full Name">
+
+                        <label class="text-sm">Username*</label>
+                        <input type="text" id="username" class="p-2 text-black rounded-md text-sm"
+                            placeholder="Choose a Username">
+
+                        <label class="text-sm">Age*</label>
+                        <input type="number" id="age" class="p-2 text-black rounded-md text-sm" placeholder="Your Age">
+
+                        <label class="text-sm">Gender*</label>
+                        <select id="gender" class="p-2 text-black rounded-md text-sm">
+                            <option value="">Select Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+
+                        <label class="text-sm">Email*</label>
+                        <input type="email" id="email" class="p-2 text-black rounded-md text-sm"
+                            placeholder="Your Email">
+
+                        <label class="text-sm">Password*</label>
+                        <input type="password" id="password" class="p-2 text-black rounded-md text-sm"
+                            placeholder="Create Password">
+
+                        <button type="submit"
+                            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-md transition duration-300">Create
+                            Account</button>
+                    </form>
+
+                    <p class="mt-4 text-center text-gray-300 text-sm">
+                        Already have an account?
+                        <a href="#" id="backToLogin" class="text-blue-400 hover:underline">Login</a>
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('createAccountLink').addEventListener('click', function (event) {
+            event.preventDefault();
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('createAccountForm').classList.remove('hidden');
+        });
+
+        document.getElementById('backToLogin').addEventListener('click', function (event) {
+            event.preventDefault();
+            document.getElementById('createAccountForm').classList.add('hidden');
+            document.getElementById('loginForm').classList.remove('hidden');
+        });
+
+        function registerUser() {
+
+            event.preventDefault();
+
+            let fullName = document.getElementById('fullName').value;
+            let username = document.getElementById('username').value;
+            let age = document.getElementById('age').value;
+            let gender = document.getElementById('gender').value;
+            let email = document.getElementById('email').value;
+            let password = document.getElementById('password').value;
+
+            if (!fullName || !username || !age || !gender || !email || !password) {
+                alert("Please fill in all fields!");
+                return false;
+            }
+
+            fetch("http://192.168.0.106:5000/api/users/register", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ fullName, username, age, gender, email, password }),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message === "User registered successfully") {
+                        alert("An email verification link has been sent to your registered email address. Please check your inbox and click on the link to verify your email and activate your account.");
+                        localStorage.setItem("loggedInUser", username);
+                        window.location.href = "index.html";
+                    } else {
+                        alert("Registration failed: " + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    alert("An error occurred. Please try again.");
+                });
+
+            return false;
+        }
+
+        function loginUser() {
+
+            event.preventDefault();
+
+            let username = document.getElementById('loginUsername').value;
+            let password = document.getElementById('loginPassword').value;
+
+            if (!username || !password) {
+                alert("Please enter both username and password!");
+                return false;
+            }
+
+            fetch("http://192.168.0.106:5000/api/users/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, password }),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Login Response:", data); // Debug log
+                    if (data.message === "Login successful") {
+                        localStorage.setItem("loggedInUser", data.user.username);
+                        alert("Login successful! Redirecting to home page...");
+                        window.location.href = "home.html";
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error("Fetch Error:", error);
+                    alert("Failed to connect to the server! Please check if backend is running.");
+                });
+
+            return false;
+        }
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,30 @@
+.App {
+  text-align: center;
+  overflow: hidden;
+}
+
+.home-grid {
+  display: grid;
+  grid-template-columns: clamp(150px, 40%, 500px) 1fr;
+  justify-items: stretch;
+  column-gap: 40px;
+}
+
+.map-ctrl-btns {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+}
+
+.map-ctrl-btns>button {
+  padding: 5px 10px;
+  border-radius: 10px;
+  z-index: 10;
+  background-color: rgb(229, 229, 229);
+}
+
+@media screen and (max-width: 600px) {
+  .home-grid {
+    grid-template-columns: 1fr;
+  }
+}

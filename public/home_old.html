@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Website</title>
+    <!-- FontAwesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f4f4;
+        }
+
+        /* Header Section */
+        header {
+            position: relative;
+            height: 100vh;
+            color: white;
+            text-align: center;
+        }
+
+        header video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav ul li {
+            display: inline;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .notifications-icon {
+            font-size: 18px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .profile-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .profile-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .username-display {
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .hero {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 70px;
+            font-weight: bold;
+            color: whitesmoke;
+        }
+
+        .hero p {
+            font-size: 30px;
+            margin-top: 20px;
+            color: #ffcc00;
+        }
+
+        .search-bar {
+            margin-top: 20px;
+        }
+
+        .search-bar input {
+            padding: 10px;
+            margin: 5px;
+            width: 200px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .search-bar button {
+            padding: 10px 20px;
+            background: #ff5733;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        /* Features Section */
+        .features {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 50px;
+            background: white;
+        }
+
+        .feature-box {
+            text-align: center;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 20%;
+            border-radius: 5px;
+        }
+
+        .feature-box i {
+            font-size: 50px;
+            margin-bottom: 10px;
+            color: #ff5733;
+        }
+
+        .feature-box h3 {
+            font-size: 20px;
+            margin-top: 10px;
+        }
+
+        .feature-box p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* Translation Button */
+        .translation-btn {
+            background: #ff5733;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .translation-btn:hover {
+            background: #ff4500;
+        }
+        .search-results {
+            margin: 20px auto;
+            max-width: 800px;
+            text-align: center;
+        }
+
+        .search-results .user-card {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .user-card img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+        .add-btn {
+            background-color: #ff4500;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: auto;
+        }
+        
+        .add-btn:hover {
+            background-color: #ff4500;
+        }
+        .notifications-dropdown {
+            position: absolute;
+            top: 50px;
+            right: 10px;
+            background: rgb(8, 8, 8);
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            padding: 10px;
+            border-radius: 5px;
+            width: 250px;
+            display: none;
+            z-index: +999999;
+        }
+        
+        .notification-container {
+            position: relative;
+        }
+        
+        .notification-item {
+            padding: 5px;
+            border-bottom: 1px solid #0f0f0f;
+        }
+        .notification-item button {
+            margin-left: 10px;
+        } 
+        .notifications-icon::after {
+            content: attr(data-count);
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: red;
+            color: rgb(17, 17, 17);
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 50%;
+            display: inline-block;
+        }  
+        
+        .dropbtn {
+            
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            margin-top: -10px;
+            height: 40px;
+ 
+        }
+
+
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown a:hover {background-color: #ddd;}
+
+.show {display: block;}
+
+        
+
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header>
+        <!-- Video Background -->
+        <video autoplay muted loop>
+            <source src="images/home.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+
+        <nav>
+            <div class="logo">Travel Companion Finder</div>
+
+            <!-- Right Side Navigation (Home, About, Notifications, Profile) -->
+            <div class="nav-right">
+                <ul>
+
+                    <div class="dropdown">
+                        <button onclick="myFunction()" class="dropbtn">Friends</button>
+                        <div id="myDropdown" class="dropdown-content">
+                          <a href="#home">Vasi</a>
+                          <a href="#about">Chitti</a>
+                          <a href="#contact">Raji</a>
+                        </div>
+                      </div>
+
+
+
+                    
+                   
+                
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    
+                    <li class="notification-container">
+                        <i class="fas fa-bell notifications-icon" onclick="toggleNotifications()"></i>
+                        <div id="notificationsDropdown" class="notifications-dropdown" style="display: none;"></div>
+                    </li>                    
+                </ul>
+
+                <!-- User Profile Section -->
+                <div class="profile-container">
+                    <span id="usernameDisplay" class="username-display">User</span>
+                    <a href="profile.html">
+                        <img id="userIcon" src="images/profile.png" alt="User" class="profile-icon">
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <div class="hero">
+            <h1 style="color: black;">Travel Companion Finder</h1>
+            <p>"Discover your next adventure with ease, and make every journey memorable!"</p>
+            <div class="search-bar">
+                <input type="text" id="searchPlace" placeholder="Enter place to find the buddy....">
+                <input type="date" id="searchDate">
+                <button onclick="searchBuddies()">Search</button>
+            </div>"
+        </div>
+    </header>
+    <section class="search-results" id="searchResults"></section>
+    <!-- Features Section -->
+    <section class="features">
+        <div class="feature-box">
+            <i class="fas fa-utensils"></i>
+            <h3>Hotels & Restaurants</h3>
+            <p>"Find the best places to eat and stay around your destination."</p>
+            <button class="translation-btn" onclick="location.href=`http://192.168.0.106:3000/`">Search</button>
+        </div>
+        
+        <div class="feature-box">
+            <i class="fas fa-map-marker-alt"></i>
+            <h3>Guide</h3>
+            <p>"Let us show you the best spots and experiences to explore."</p>
+            <button class="translation-btn" target="_blanck" onclick="location.href='guide.html'">Guide</button>
+        </div>
+        
+        <div class="feature-box">
+            <i class="fas fa-language"></i>
+            <h3>Language Translation</h3>
+            <p>"Breaking language barriers for smoother travel experiences."</p>
+            <button class="translation-btn" onclick="location.href='translator.html'">Start Translation</button>
+        </div>
+        <!-- Vehicle Rentals -->
+        <div class="feature-box">
+            <i class="fas fa-car"></i> <!-- Vehicle Rental Icon -->
+            <h3>Vehicle Rentals</h3>
+           <p>"Find the best rental services for bikes, cars, and cycles at your location."</p>
+           <button class="translation-btn" onclick="window.open(`http://192.168.0.106:3006/`, '_blank')">Find Rentals</button>
+        </div>
+    </section>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const loggedInUser = localStorage.getItem("loggedInUser");
+        
+            if (loggedInUser) {
+                // Retrieve stored user profiles
+                let allUsers = JSON.parse(localStorage.getItem("users")) || {};
+                let userProfile = allUsers[loggedInUser] || {}; // Load only the logged-in user's data
+        
+                if (userProfile.username) {
+                    document.getElementById("usernameDisplay").textContent = userProfile.username;
+                }
+                if (userProfile.profilePic) {
+                    document.getElementById("userIcon").src = userProfile.profilePic;
+                }
+        
+                // Fetch latest profile data from backend for accuracy
+                fetch(`http://192.168.0.106:5000/api/users/getProfile/${loggedInUser}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.username) {
+                            document.getElementById("usernameDisplay").textContent = data.username;
+                        }
+                        if (data.profilePic) {
+                            document.getElementById("userIcon").src = data.profilePic;
+                        }
+        
+                        // Store updated profile data only for the logged-in user
+                        let allUsers = JSON.parse(localStorage.getItem("users")) || {};
+                        allUsers[loggedInUser] = {
+                            ...allUsers[loggedInUser], // Keep existing user data
+                            profilePic: data.profilePic || allUsers[loggedInUser]?.profilePic // Preserve previous pic if not updated
+                        };
+                        localStorage.setItem("users", JSON.stringify(allUsers));
+                    })
+                    .catch(error => console.error("Error fetching user:", error));
+            } else {
+                console.log("[USER NOT LOGGED IN] Redirecting to signup...");
+                window.location.href = "index.html"; // Redirect if not logged in
+            }
+        });     
+        function searchBuddies() {
+            const place = document.getElementById("searchPlace").value;
+            const date = document.getElementById("searchDate").value;
+            const loggedInUser = localStorage.getItem("loggedInUser");
+        
+            if (!place || !date) {
+                alert("Please enter both place and date.");
+                return;
+            }
+        
+            fetch(`http://192.168.0.106:5000/api/users/search?place=${encodeURIComponent(place)}&date=${encodeURIComponent(date)}&loggedInUser=${loggedInUser}`)
+                .then(response => response.json())
+                .then(data => {
+                    const resultsContainer = document.getElementById("searchResults");
+                    resultsContainer.innerHTML = "";
+        
+                    if (data.length === 0) {
+                        resultsContainer.innerHTML = "<p>No matching users found.</p>";
+                        return;
+                    }
+        
+                    data.forEach(user => {
+                        if (user.username !== loggedInUser) { // Exclude logged-in user
+                            const userCard = document.createElement("div");
+                            userCard.classList.add("user-card");
+        
+                            userCard.innerHTML = `
+                                <img src="${user.profilePic || 'images/profile.png'}" alt="User">
+                                <div>
+                                    <strong>${user.fullName}</strong>
+                                    <p>${user.email}</p>
+                                </div>
+                                <button class="add-btn" 
+                                onclick="${!user.isFriend ? `sendRequest('${user.username}')` : ''}">
+                                ${user.isFriend ? "Connected" : "Add +"}
+                                </button>  
+                            `;
+        
+                            resultsContainer.appendChild(userCard);
+                        }
+                    });
+                })
+                .catch(error => console.error("Error fetching users:", error));
+        }        
+        function sendRequest(username) {
+            const sender = localStorage.getItem("loggedInUser");
+        
+            fetch("http://192.168.0.106:5000/api/users/sendRequest", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ sender, receiver: username })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                updateNotificationCount();
+                searchBuddies();  // Update bell icon
+            })
+            .catch(error => console.error("Error sending request:", error));
+        }
+        function updateNotificationCount() {
+            const loggedInUser = localStorage.getItem("loggedInUser");
+            if (!loggedInUser) return;
+        
+            fetch(`http://192.168.0.106:5000/api/users/notifications/all/${loggedInUser}`)
+                .then(response => response.json())
+                .then(data => {
+                    const notificationIcon = document.querySelector(".notifications-icon");
+                    const notificationsDropdown = document.getElementById("notificationsDropdown");
+        
+                    // Clear existing notifications
+                    notificationsDropdown.innerHTML = "<h3>Notifications</h3>";
+        
+                    if (data.length > 0) {
+                        notificationIcon.setAttribute("data-count", data.length);
+        
+                        data.forEach(notification => {
+                            const notificationItem = document.createElement("div");
+                            notificationItem.classList.add("notification-item");
+        
+                            if (notification.type === "friend_request") {
+                                notificationItem.innerHTML = `
+                                    <img src="${notification.profilePic ? `http://192.168.0.106:5000/uploads/${notification.profilePic}` : 'images/profile.png'}" alt="User" class="profile-icon">
+                                    <p><strong>${notification.sender}</strong> sent a friend request</p>
+                                    <button onclick="respondRequest(${notification.id}, 'accepted')">Accept</button>
+                                    <button onclick="respondRequest(${notification.id}, 'declined')">Decline</button>
+                                `;
+                            } else if (notification.type === "general" || notification.type === "friend_accepted") {
+                                notificationItem.innerHTML = `
+                                    <p>${notification.message}</p>
+                                    <button onclick="removeNotification(${notification.id})">OK</button>
+                                `;
+                            }
+        
+                            notificationsDropdown.appendChild(notificationItem);
+                        });
+                    } else {
+                        notificationIcon.setAttribute("data-count", "0");
+                        notificationsDropdown.innerHTML += "<p>No new notifications</p>";
+                    }
+                })
+                .catch(error => console.error("Error fetching notifications:", error));
+        }        
+        
+        // Fetch notifications on page load and every 10 seconds
+        document.addEventListener("DOMContentLoaded", () => {
+            updateNotificationCount();
+            setInterval(updateNotificationCount, 10000); // Auto-refresh every 10 seconds
+        });        
+    
+        function respondRequest(requestId, action) {
+            const loggedInUser = localStorage.getItem("loggedInUser");
+            
+            fetch("http://192.168.0.106:5000/api/users/respondRequest", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ requestId, action, loggedInUser })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                
+                // Remove the processed request from the notifications list
+                const requestElement = document.querySelector(`button[onclick="respondRequest(${requestId}, '${action}')"]`).parentNode;
+                requestElement.remove();
+                // Refresh notification count
+                updateNotificationCount();
+                // Decrease notification count
+                const notificationIcon = document.querySelector(".notifications-icon");
+                let currentCount = parseInt(notificationIcon.getAttribute("data-count")) || 0;
+                let newCount = currentCount > 0 ? currentCount - 1 : 0;
+                notificationIcon.setAttribute("data-count", newCount);
+        
+                // If no notifications left, update the UI
+                const notificationsDropdown = document.getElementById("notificationsDropdown");
+                if (newCount === 0) {
+                    notificationsDropdown.innerHTML = "<h3>Friend Requests</h3><p>No new requests</p>";
+                }
+        
+                // Send notification if accepted
+                if (action === "accepted") {
+                    fetch("http://192.168.0.106:5000/api/users/sendNotification", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ receiver: data.receiver, message: `${loggedInUser} accepted your friend request!` })
+                    })
+                    .catch(error => console.error("Error sending notification:", error));
+                }
+            })
+            .catch(error => console.error("Error updating request:", error));
+        }        
+        function fetchUserNotifications() {
+            const loggedInUser = localStorage.getItem("loggedInUser");
+            if (!loggedInUser) return;
+        
+            fetch(`http://192.168.0.106:5000/api/users/notifications/${loggedInUser}`)
+                .then(response => response.json())
+                .then(data => {
+                    const notificationsDropdown = document.getElementById("notificationsDropdown");
+                    notificationsDropdown.innerHTML = "<h3>Notifications</h3>";
+        
+                    if (data.length > 0) {
+                        data.forEach(notification => {
+                            const notificationItem = document.createElement("div");
+                            notificationItem.classList.add("notification-item");
+                            notificationItem.innerHTML = `<p>${notification.message}</p>`;
+                            notificationsDropdown.appendChild(notificationItem);
+                        });
+                    } else {
+                        notificationsDropdown.innerHTML += "<p>No new notifications</p>";
+                    }
+                })
+                .catch(error => console.error("Error fetching notifications:", error));
+        }
+        
+        // Fetch notifications on page load
+        document.addEventListener("DOMContentLoaded", fetchUserNotifications);
+        function removeNotification(notificationId) {
+            fetch("http://192.168.0.106:5000/api/users/notifications/markAsRead", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ notificationId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Remove notification from the dropdown
+                    const notificationElement = document.querySelector(`button[onclick="removeNotification(${notificationId})"]`);
+                    if (notificationElement) {
+                        notificationElement.parentNode.remove();
+                    }
+        
+                    // Update notification count
+                    const notificationIcon = document.querySelector(".notifications-icon");
+                    let currentCount = parseInt(notificationIcon.getAttribute("data-count")) || 0;
+                    let newCount = Math.max(0, currentCount - 1);
+                    notificationIcon.setAttribute("data-count", newCount);
+        
+                    // If no notifications left, update the UI
+                    const notificationsDropdown = document.getElementById("notificationsDropdown");
+                    if (newCount === 0) {
+                        notificationsDropdown.innerHTML = "<h3>Notifications</h3><p>No new notifications</p>";
+                    }
+                }
+            })
+            .catch(error => console.error("Error removing notification:", error));
+        }                
+    
+        function toggleNotifications() {
+            const dropdown = document.getElementById("notificationsDropdown");
+            dropdown.style.display = dropdown.style.display === "none" ? "block" : "none";
+        }
+    
+        document.addEventListener("DOMContentLoaded", updateNotificationCount);     
+
+       /* When the user clicks on the button, 
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+
+
+
+
+    </script>
+
+</body>
+</html>
