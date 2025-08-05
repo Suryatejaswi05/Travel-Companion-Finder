@@ -28,7 +28,7 @@
 
 *Output Screenshots:*
 
-![Output Image](output 1.JPG)
+![Output Image](output 1.jpg)
 
 ![Output Image](output 2.JPG)
 
