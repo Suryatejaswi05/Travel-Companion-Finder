@@ -30,22 +30,22 @@
 
 ![Output Image](output1.jpg)
 
-![Output Image](output2.JPG)
+![Output Image](output2.jpg)
 
-![Output Image](output3.JPG)
+![Output Image](output3.jpg)
 
-![Output Image](output4.JPG)
+![Output Image](output4.jpg)
 
-![Output Image](output 5.JPG)
+![Output Image](output5.jpg)
 
-![Output Image](output 6.JPG)
+![Output Image](output6.jpg)
 
-![Output Image](output 7.JPG)
+![Output Image](output7.jpg)
 
-![Output Image](output 8.JPG)
+![Output Image](output8.jpg)
 
-![Output Image](output 9.JPG)
+![Output Image](output9.jpg)
 
-![Output Image](output 10.JPG)
+![Output Image](output10.jpg)
 
-![Output Image](output 11.JPG)
+![Output Image](output11.jpg)
