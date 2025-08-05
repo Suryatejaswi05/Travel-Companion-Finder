@@ -28,13 +28,13 @@
 
 *Output Screenshots:*
 
-![Output Image](output 1.jpg)
+![Output Image](output1.jpg)
 
-![Output Image](output 2.JPG)
+![Output Image](output2.JPG)
 
-![Output Image](output 3.JPG)
+![Output Image](output3.JPG)
 
-![Output Image](output 4.JPG)
+![Output Image](output4.JPG)
 
 ![Output Image](output 5.JPG)
 
